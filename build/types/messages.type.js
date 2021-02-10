@@ -33,6 +33,10 @@ __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
 ], Message.prototype, "from", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], Message.prototype, "usuario", void 0);
 Message = __decorate([
     type_graphql_1.ObjectType()
 ], Message);

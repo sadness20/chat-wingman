@@ -25,10 +25,10 @@ let ChatResolver = class ChatResolver {
         this.conversations = [];
     }
     allMessages(conversation) {
-        return this.conversations;
+        return this.conversations.filter(c => c.conversation == conversation);
     }
-    async sendMessage(pubSub, message, conversation, from) {
-        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from };
+    async sendMessage(pubSub, message, conversation, from, usuario) {
+        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario };
         this.conversations.push(payload);
         console.log(payload);
         await pubSub.publish("NEWMESSAGE", payload);
@@ -51,8 +51,10 @@ __decorate([
     __param(1, type_graphql_1.Arg("message")),
     __param(2, type_graphql_1.Arg("conversation")),
     __param(3, type_graphql_1.Arg("from")),
+    __param(4, type_graphql_1.Arg("usuario")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSubEngine, String, String,
+        String,
         String]),
     __metadata("design:returntype", Promise)
 ], ChatResolver.prototype, "sendMessage", null);
