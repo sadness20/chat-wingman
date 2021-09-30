@@ -1,5 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function(mod) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -22,14 +22,14 @@ hL?j(XUua[k.
 */
 const configurations = {
     // Note: You may need sudo to run on port 443
-    production: { ssl: true, port: 4020, hostname: 'wingman.mx', path: './ssl/' },
-    development: { ssl: false, port: 4020, hostname: 'localhost', path: './ssl/' }
+    production: { ssl: true, port: 4021, hostname: 'wingman.mx', path: './ssl/' },
+    development: { ssl: false, port: 4021, hostname: 'localhost', path: './ssl/' }
 };
 const corsOptions = {
     origin: '*',
     credentials: false
 };
-const config = configurations['production'];
+const config = configurations['development'];
 const mysql = require('mysql');
 /*
 const connection = mysql.createConnection({
@@ -43,14 +43,14 @@ const connection = mysql.createConnection({
     host: 'wingman-1.cwljun5jhtyy.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: 'Wingman2021*',
-    database: 'wingman_db'
+    database: 'wingman_pruebas'
 });
 connection.connect((err) => {
     if (err) {
         console.log('Error connecting to Db: ' + err);
         return;
     }
-    const init = async(port = 4020) => {
+    const init = async (port = 4021) => {
         const schema = await type_graphql_1.buildSchema({
             resolvers: [
                 chat_resolver_1.ChatResolver
@@ -64,7 +64,7 @@ connection.connect((err) => {
             cacheControl: {
                 defaultMaxAge: 0
             },
-            context: async({ req, res }) => {
+            context: async ({ req, res }) => {
                 if (res) {
                     res.setTimeout(600000, () => {
                         logger_helper_1.logger.info('Request has timed out.');
@@ -86,7 +86,8 @@ connection.connect((err) => {
                 cert: fs_1.default.readFileSync(config.path + 'server.crt')
             }, app);
             apollo.installSubscriptionHandlers(server);
-        } else {
+        }
+        else {
             server = http_1.default.createServer(app);
         }
         server.listen({ port: config.port }, () => {
@@ -96,5 +97,5 @@ connection.connect((err) => {
         return server;
     };
     process.setMaxListeners(0);
-    init(process.env.PORT_GRAPHQL || 4020);
+    init(process.env.PORT_GRAPHQL || 4021);
 });
