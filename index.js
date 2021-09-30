@@ -29,7 +29,7 @@ const corsOptions = {
     origin: '*',
     credentials: false
 };
-const config = configurations['development'];
+const config = configurations['production'];
 const mysql = require('mysql');
 /*
 const connection = mysql.createConnection({
