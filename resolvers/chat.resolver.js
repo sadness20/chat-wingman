@@ -33,7 +33,7 @@ const connection = mysql.createConnection({
     host: 'wingman-1.cwljun5jhtyy.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: 'Wingman2021*',
-    database: 'wingman_pruebas'
+    database: 'wingman_db'
 });
 function getConversacion(conversation) {
     return new Promise(function (resolve, reject) {
