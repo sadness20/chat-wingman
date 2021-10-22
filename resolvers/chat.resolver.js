@@ -60,11 +60,11 @@ let ChatResolver = class ChatResolver {
         }).catch((err) => setImmediate(() => { throw err; }));
         return var_temp;
     }
-    async sendMessage(pubSub, message, conversation, from, usuario) {
-        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario };
+    async sendMessage(pubSub, message, conversation, from, usuario, isFile) {
+        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario, isFile };
         this.conversations.push(payload);
         console.log(payload);
-        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '", "' + payload.usuario + '")');
+        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '")');
         await pubSub.publish("NEWMESSAGE", payload);
         return true;
     }
@@ -91,10 +91,11 @@ __decorate([
     __param(2, type_graphql_1.Arg("conversation")),
     __param(3, type_graphql_1.Arg("from")),
     __param(4, type_graphql_1.Arg("usuario")),
+    __param(5, type_graphql_1.Arg("isFile")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSubEngine, String, String,
         String,
-        String]),
+        String, Boolean]),
     __metadata("design:returntype", Promise)
 ], ChatResolver.prototype, "sendMessage", null);
 __decorate([
