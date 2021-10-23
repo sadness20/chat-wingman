@@ -23,21 +23,20 @@ const messages_type_1 = require("../types/messages.type");
 const mysql = require('mysql');
 /*
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'wingman_db'
-});
-*/
+    host: 'localhost',
+    user: 'juan',
+    password: 'root',
+    database: 'wingman_db'
+});*/
 const connection = mysql.createConnection({
     host: 'wingman-1.cwljun5jhtyy.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: 'Wingman2021*',
-    database: 'wingman_db'
+    database: 'wingman_pruebas'
 });
 function getConversacion(conversation) {
     return new Promise(function (resolve, reject) {
-        var query_str = `SELECT * FROM chats WHERE conversation = "${conversation}"`;
+        var query_str = `SELECT * FROM chats WHERE conversation = "${conversation}" ORDER BY id desc`;
         connection.query(query_str, function (err, rows, fields) {
             // Call reject on error states,
             // call resolve with results
@@ -95,7 +94,8 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSubEngine, String, String,
         String,
-        String, Boolean]),
+        String,
+        String]),
     __metadata("design:returntype", Promise)
 ], ChatResolver.prototype, "sendMessage", null);
 __decorate([

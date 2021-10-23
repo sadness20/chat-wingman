@@ -31,14 +31,12 @@ const corsOptions = {
 };
 const config = configurations['production'];
 const mysql = require('mysql');
-/*
-const connection = mysql.createConnection({
+/*const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: '',
+  user: 'juan',
+  password: 'root',
   database: 'wingman_db'
-});
-*/
+});*/
 const connection = mysql.createConnection({
     host: 'wingman-1.cwljun5jhtyy.us-east-2.rds.amazonaws.com',
     user: 'admin',

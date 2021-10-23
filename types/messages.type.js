@@ -39,7 +39,7 @@ __decorate([
 ], Message.prototype, "usuario", void 0);
 __decorate([
     type_graphql_1.Field(),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], Message.prototype, "isFile", void 0);
 Message = __decorate([
     type_graphql_1.ObjectType()
