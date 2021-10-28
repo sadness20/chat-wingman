@@ -78,7 +78,7 @@ let ChatResolver = class ChatResolver {
     async sendMessage(pubSub, message, conversation, from, usuario, isFile) {
         const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario, isFile };
         this.conversations.push(payload);
-        console.log(payload);
+        //console.log(payload);
         await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '")');
         await pubSub.publish("NEWMESSAGE", payload);
         return true;
@@ -97,7 +97,7 @@ let ChatResolver = class ChatResolver {
         await getConversacionClients(conversation).then(function (rows) {
             var_temp = Object.values(JSON.parse(JSON.stringify(rows)));
         }).catch((err) => setImmediate(() => { throw err; }));
-        console.log(var_temp);
+        //console.log(var_temp);  
         return var_temp;
     }
     async sendMessageClient(pubSub, message, conversation, from) {
