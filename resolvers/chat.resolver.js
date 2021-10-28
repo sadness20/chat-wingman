@@ -20,6 +20,7 @@ const graphql_subscriptions_1 = require("graphql-subscriptions");
 const type_graphql_1 = require("type-graphql");
 const moment_1 = __importDefault(require("moment"));
 const messages_type_1 = require("../types/messages.type");
+const message_client_type_1 = require("../types/message.client.type");
 const mysql = require('mysql');
 /*
 const connection = mysql.createConnection({
@@ -32,11 +33,25 @@ const connection = mysql.createConnection({
     host: 'wingman-1.cwljun5jhtyy.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: 'Wingman2021*',
-    database: 'wingman_db'
+    database: 'wingman_pruebas'
 });
 function getConversacion(conversation) {
     return new Promise(function (resolve, reject) {
         var query_str = `SELECT * FROM chats WHERE conversation = "${conversation}" ORDER BY id desc`;
+        connection.query(query_str, function (err, rows, fields) {
+            // Call reject on error states,
+            // call resolve with results
+            if (err) {
+                return reject(err);
+            }
+            resolve(rows);
+        });
+    });
+}
+function getConversacionClients(conversation) {
+    return new Promise(function (resolve, reject) {
+        var query_str = `SELECT * FROM chat_clientes WHERE conversation = "${conversation}" ORDER BY id desc LIMIT 0,50`;
+        //console.log(query_str);
         connection.query(query_str, function (err, rows, fields) {
             // Call reject on error states,
             // call resolve with results
@@ -75,6 +90,31 @@ let ChatResolver = class ChatResolver {
         }).catch((err) => setImmediate(() => { throw err; }));
         return var_temp;
     }
+    async allMessagesClients(conversation) {
+        var temp = undefined;
+        let var_temp;
+        await getConversacionClients(conversation).then(function (rows) {
+            var_temp = Object.values(JSON.parse(JSON.stringify(rows)));
+        }).catch((err) => setImmediate(() => { throw err; }));
+        console.log(var_temp);
+        return var_temp;
+    }
+    async sendMessageClient(pubSub, message, conversation, from) {
+        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, leido: '0' };
+        //this.conversations.push(payload);
+        //console.log(payload);
+        await connection.query('INSERT INTO chat_clientes VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", "' + payload.from + '", ' + payload.date + ',0)');
+        await pubSub.publish("NEWMESSAGE", payload);
+        return true;
+    }
+    async subscriptionMessageClients(conversation) {
+        var temp = undefined;
+        let var_temp;
+        await getConversacionClients(conversation).then(function (rows) {
+            var_temp = Object.values(JSON.parse(JSON.stringify(rows)));
+        }).catch((err) => setImmediate(() => { throw err; }));
+        return var_temp;
+    }
 };
 __decorate([
     type_graphql_1.Query(returns => [messages_type_1.Message]),
@@ -107,6 +147,33 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ChatResolver.prototype, "subscriptionMessage", null);
+__decorate([
+    type_graphql_1.Query(returns => [message_client_type_1.MessageClient]),
+    __param(0, type_graphql_1.Arg("conversation", { nullable: false })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ChatResolver.prototype, "allMessagesClients", null);
+__decorate([
+    type_graphql_1.Mutation(returns => Boolean),
+    __param(0, type_graphql_1.PubSub()),
+    __param(1, type_graphql_1.Arg("message")),
+    __param(2, type_graphql_1.Arg("conversation")),
+    __param(3, type_graphql_1.Arg("from")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [graphql_subscriptions_1.PubSubEngine, String, String,
+        String]),
+    __metadata("design:returntype", Promise)
+], ChatResolver.prototype, "sendMessageClient", null);
+__decorate([
+    type_graphql_1.Subscription(returns => [message_client_type_1.MessageClient], {
+        topics: "NEWMESSAGE2"
+    }),
+    __param(0, type_graphql_1.Arg("conversation", { nullable: false })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ChatResolver.prototype, "subscriptionMessageClients", null);
 ChatResolver = __decorate([
     type_graphql_1.Resolver()
 ], ChatResolver);
