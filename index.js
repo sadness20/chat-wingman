@@ -48,7 +48,7 @@ connection.connect((err) => {
         console.log('Error connecting to Db: ' + err);
         return;
     }
-    const init = async (port = 4020) => {
+    const init = async (port = 4021) => {
         const schema = await type_graphql_1.buildSchema({
             resolvers: [
                 chat_resolver_1.ChatResolver
