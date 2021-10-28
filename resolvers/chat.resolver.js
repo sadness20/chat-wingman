@@ -65,6 +65,7 @@ function getConversacionClients(conversation) {
 let ChatResolver = class ChatResolver {
     constructor() {
         this.conversations = [];
+        this.conversationsClient = [];
     }
     async allMessages(conversation) {
         var temp = undefined;
@@ -101,7 +102,7 @@ let ChatResolver = class ChatResolver {
     }
     async sendMessageClient(pubSub, message, conversation, from) {
         const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, leido: '0' };
-        //this.conversations.push(payload);
+        this.conversationsClient.push(payload);
         //console.log(payload);
         await connection.query('INSERT INTO chat_clientes VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", "' + payload.from + '", ' + payload.date + ',0)');
         await pubSub.publish("NEWMESSAGE", payload);
