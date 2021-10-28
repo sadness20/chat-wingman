@@ -105,7 +105,7 @@ let ChatResolver = class ChatResolver {
         this.conversationsClient.push(payload);
         //console.log(payload);
         await connection.query('INSERT INTO chat_clientes VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", "' + payload.from + '", ' + payload.date + ',0)');
-        await pubSub.publish("NEWMESSAGE", payload);
+        await pubSub.publish("NEWMESSAGE2", payload);
         return true;
     }
     async subscriptionMessageClients(conversation) {
