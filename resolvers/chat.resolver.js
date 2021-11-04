@@ -76,7 +76,7 @@ let ChatResolver = class ChatResolver {
         return var_temp;
     }
     async sendMessage(pubSub, message, conversation, from, usuario, isFile) {
-        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario, isFile, isSys: '0', sysTo: '' };
+        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario, isFile, isSys: '0', sysTo: '0' };
         this.conversations.push(payload);
         //console.log(payload);
         await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '")');
