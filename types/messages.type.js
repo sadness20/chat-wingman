@@ -41,6 +41,14 @@ __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
 ], Message.prototype, "isFile", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], Message.prototype, "isSys", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], Message.prototype, "sysTo", void 0);
 Message = __decorate([
     type_graphql_1.ObjectType()
 ], Message);
