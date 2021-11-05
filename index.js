@@ -22,8 +22,8 @@ hL?j(XUua[k.
 */
 const configurations = {
     // Note: You may need sudo to run on port 443
-    production: { ssl: true, port: 4021, hostname: 'wingman.mx', path: './ssl/' },
-    development: { ssl: false, port: 4021, hostname: 'localhost', path: './ssl/' }
+    production: { ssl: true, port: 4020, hostname: 'wingman.mx', path: './ssl/' },
+    development: { ssl: false, port: 4020, hostname: 'localhost', path: './ssl/' }
 };
 const corsOptions = {
     origin: '*',
@@ -41,14 +41,14 @@ const connection = mysql.createConnection({
     host: 'wingman-1.cwljun5jhtyy.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: 'Wingman2021*',
-    database: 'wingman_pruebas'
+    database: 'wingman_db'
 });
 connection.connect((err) => {
     if (err) {
         console.log('Error connecting to Db: ' + err);
         return;
     }
-    const init = async (port = 4021) => {
+    const init = async (port = 4020) => {
         const schema = await type_graphql_1.buildSchema({
             resolvers: [
                 chat_resolver_1.ChatResolver
