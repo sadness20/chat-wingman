@@ -33,7 +33,7 @@ const connection = mysql.createConnection({
     host: 'wingman-1.cwljun5jhtyy.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: 'Wingman2021*',
-    database: 'wingman_db'
+    database: 'wingman_pruebas'
 });
 function getConversacion(conversation) {
     return new Promise(function (resolve, reject) {
@@ -76,10 +76,10 @@ let ChatResolver = class ChatResolver {
         return var_temp;
     }
     async sendMessage(pubSub, message, conversation, from, usuario, isFile, isSys, sysTo) {
-        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario, isFile, isSys, sysTo };
+        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario, isFile, isSys, sysTo, leido: '0' };
         this.conversations.push(payload);
         //console.log(payload);
-        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '", "' + payload.isSys + '" , "' + payload.sysTo + '", "0")');
+        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '", "' + payload.isSys + '" , "' + payload.sysTo + '", "' + payload.leido + '")');
         await pubSub.publish("NEWMESSAGE", payload);
         return true;
     }
