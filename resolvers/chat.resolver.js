@@ -75,11 +75,11 @@ let ChatResolver = class ChatResolver {
         }).catch((err) => setImmediate(() => { throw err; }));
         return var_temp;
     }
-    async sendMessage(pubSub, message, conversation, from, usuario, isFile, isSys, sysTo) {
-        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, usuario, isFile, isSys, sysTo, leido: '0' };
+    async sendMessage(pubSub, message, conversation, from, to, usuario, isFile, isSys, sysTo) {
+        const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, to, usuario, isFile, isSys, sysTo, leido: '0' };
         this.conversations.push(payload);
         //console.log(payload);
-        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '", "' + payload.isSys + '" , "' + payload.sysTo + '", "' + payload.leido + '")');
+        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.to + '","' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '", "' + payload.isSys + '" , "' + payload.sysTo + '", "' + payload.leido + '")');
         await pubSub.publish("NEWMESSAGE", payload);
         return true;
     }
@@ -130,12 +130,14 @@ __decorate([
     __param(1, type_graphql_1.Arg("message")),
     __param(2, type_graphql_1.Arg("conversation")),
     __param(3, type_graphql_1.Arg("from")),
-    __param(4, type_graphql_1.Arg("usuario")),
-    __param(5, type_graphql_1.Arg("isFile")),
-    __param(6, type_graphql_1.Arg("isSys")),
-    __param(7, type_graphql_1.Arg("sysTo")),
+    __param(4, type_graphql_1.Arg("to")),
+    __param(5, type_graphql_1.Arg("usuario")),
+    __param(6, type_graphql_1.Arg("isFile")),
+    __param(7, type_graphql_1.Arg("isSys")),
+    __param(8, type_graphql_1.Arg("sysTo")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSubEngine, String, String,
+        String,
         String,
         String,
         String,

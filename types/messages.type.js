@@ -44,6 +44,10 @@ __decorate([
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
+], Message.prototype, "to", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
 ], Message.prototype, "isSys", void 0);
 __decorate([
     type_graphql_1.Field(),
