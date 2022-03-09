@@ -79,7 +79,7 @@ let ChatResolver = class ChatResolver {
         const payload = { _id: Math.random().toString(), conversation, message, date: moment_1.default().unix(), from, to, usuario, isFile, isSys, sysTo, leido: '0' };
         this.conversations.push(payload);
         //console.log(payload);
-        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.to + '","' + payload.from + '", "' + payload.usuario + '", "' + payload.isFile + '", "' + payload.isSys + '" , "' + payload.sysTo + '", "' + payload.leido + '")');
+        await connection.query('INSERT INTO chats VALUES("", "' + payload._id + '", "' + payload.conversation + '", "' + payload.message + '", ' + payload.date + ', "' + payload.from + '","' + payload.to + '", "' + payload.usuario + '", "' + payload.isFile + '", "' + payload.isSys + '" , "' + payload.sysTo + '", "' + payload.leido + '")');
         await pubSub.publish("NEWMESSAGE", payload);
         return true;
     }
